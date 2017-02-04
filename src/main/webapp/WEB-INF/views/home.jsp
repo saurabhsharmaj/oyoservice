@@ -41,6 +41,35 @@
 		<div class="text-center">
 			<div id="page-selection" class="pagination-sm"></div>
 		</div>
+		
+		<div class="form-group">
+        <label for="selectUser" style="float:left;padding: 6px 12px 2px 12px;">Select Vechilcle Type:</label>
+	        <select id="vtype" style="width:auto;" class="form-control selectWidth" onchange="getManufacturer(this.value);">
+	          <option class="">Select Vechilcle Type</option>
+	        </select>
+	      </div>
+	      
+	      <div class="form-group">
+        <label for="selectUser" style="float:left;padding: 6px 12px 2px 12px;">Select ManuFacturer Type:</label>
+	        <select id="manufacturer" style="width:auto;" class="form-control selectWidth" onchange="getModals(this.value);">
+	          <option class="">Select ManuFacturer Type</option>
+	        </select>
+	      </div>
+	      
+	      <div class="form-group">
+        <label for="selectUser" style="float:left;padding: 6px 12px 2px 12px;">Select Modal Type:</label>
+	        <select id="modal" style="width:auto;" class="form-control selectWidth" onchange="getVariants(this.value);">
+	          <option class="">Select Modal Type</option>
+	        </select>
+	      </div>
+      
+      <div class="form-group">
+        <label for="selectUser" style="float:left;padding: 6px 12px 2px 12px;">Select Variant Type:</label>
+	        <select id="variant" style="width:auto;" class="form-control selectWidth" onchange="getVechicles(this.value);">
+	          <option class="">Select Variant Type</option>
+	        </select>
+	      </div>
+      
 	</div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

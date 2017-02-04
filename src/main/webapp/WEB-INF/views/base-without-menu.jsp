@@ -18,9 +18,10 @@
 
 <body> 
 <script>
-var hostName = "216.198.248.69";
+var scheme="http";
+var hostName = "localhost";
 var portNo="8080";
-var contextPath="idlinkneurotech"
+var contextPath="oyoservice"
 </script>
 <div id="wrapper" style="padding-bottom: 100px;">
         <!-- Navigation -->
@@ -38,17 +39,80 @@ var contextPath="idlinkneurotech"
 <input type="hidden" id="main-error" name="main-error">
 </body>
 <script>
-$( document ).ready(function() {
-
-	$("input#u_name").focus(function() {
-		 $('.display-none').hide();
-	});
-	
-	$('input#u_name').keypress(function(e) {		
-        if(e.which == 13) {
-            return false;
-        }
-    });
+$( document ).ready(function() {	
+			$.getJSON("rest/vechicletypes").done(function (response) {
+				 $("#vtype option").remove(); // Remove all <option> child tags.
+				 $("#vtype").append( // Append an object to the inside of the select box
+				            $("<option></option>") // Yes you can do this.
+				                .text("Select Vechicle Type")
+				                .val("-1")
+				        );  
+				 $.each(response, function(index, item) { // Iterates through a collection
+				        $("#vtype").append( // Append an object to the inside of the select box
+				            $("<option></option>") // Yes you can do this.
+				                .text(item.vechicleName)
+				                .val(item.id)
+				        );
+				    });
+			});
 });
+
+function getManufacturer(vechicleType){
+	$.getJSON("rest/manufacturer/"+vechicleType).done(function (response) {
+		 $("#manufacturer option").remove(); // Remove all <option> child tags.
+		 $("#manufacturer").append( // Append an object to the inside of the select box
+		            $("<option></option>") // Yes you can do this.
+		                .text("Select Manufacturer")
+		                .val("-1")
+		        );  
+		 $.each(response, function(index, item) { // Iterates through a collection
+		        $("#manufacturer").append( // Append an object to the inside of the select box
+		            $("<option></option>") // Yes you can do this.
+		                .text(item.vechicleName)
+		                .val(item.id)
+		        );
+		    });
+	});
+}
+
+function getModals(manufacturerId){
+	$.getJSON("rest/modal/"+manufacturerId).done(function (response) {
+		 $("#modal option").remove(); // Remove all <option> child tags.
+		 $("#modal").append( // Append an object to the inside of the select box
+		            $("<option></option>") // Yes you can do this.
+		                .text("Select Manufacturer")
+		                .val("-1")
+		        );  
+		 $.each(response, function(index, item) { // Iterates through a collection
+		        $("#modal").append( // Append an object to the inside of the select box
+		            $("<option></option>") // Yes you can do this.
+		                .text(item.vechicleName)
+		                .val(item.id)
+		        );
+		    });
+	});
+}
+
+function getVariants(modalId){
+	$.getJSON("rest/vechiclevariant/"+modalId).done(function (response) {
+		 $("#variant option").remove(); // Remove all <option> child tags.
+		 $("#variant").append( // Append an object to the inside of the select box
+		            $("<option></option>") // Yes you can do this.
+		                .text("Select Variant Type")
+		                .val("-1")
+		        );  
+		 $.each(response, function(index, item) { // Iterates through a collection
+		        $("#variant").append( // Append an object to the inside of the select box
+		            $("<option></option>") // Yes you can do this.
+		                .text(item.vechicleName)
+		                .val(item.id)
+		        );
+		    });
+	});
+}
+
+function getVechicles(variantId){
+	alert( "Final Seach");
+}
 </script>
 </html>
