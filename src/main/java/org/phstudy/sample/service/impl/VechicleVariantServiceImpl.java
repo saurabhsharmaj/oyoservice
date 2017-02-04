@@ -45,4 +45,9 @@ public class VechicleVariantServiceImpl implements VechicleVariantService {
 		serviceTypeDAO.removeVechicleVariant(id);
 	}
 
+	@Override
+	public List<VechicleVariant> listVechicleVariants(Integer vechicleModalId) {
+		return serviceTypeDAO.listVechicleVariants(vechicleModalId);
+	}
+
 }

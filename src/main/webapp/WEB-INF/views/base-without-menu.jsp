@@ -94,7 +94,7 @@ function getModals(manufacturerId){
 }
 
 function getVariants(modalId){
-	$.getJSON("rest/vechiclevariant/"+modalId).done(function (response) {
+	$.getJSON("rest/vechiclevariants/"+modalId).done(function (response) {
 		 $("#variant option").remove(); // Remove all <option> child tags.
 		 $("#variant").append( // Append an object to the inside of the select box
 		            $("<option></option>") // Yes you can do this.
@@ -104,7 +104,7 @@ function getVariants(modalId){
 		 $.each(response, function(index, item) { // Iterates through a collection
 		        $("#variant").append( // Append an object to the inside of the select box
 		            $("<option></option>") // Yes you can do this.
-		                .text(item.vechicleName)
+		                .text(item.variantName)
 		                .val(item.id)
 		        );
 		    });

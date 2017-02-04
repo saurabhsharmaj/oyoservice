@@ -2,8 +2,10 @@ package org.phstudy.sample.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.phstudy.sample.dao.VechicleVariantDAO;
 import org.phstudy.sample.model.VechicleVariant;
 import org.slf4j.Logger;
@@ -52,6 +54,14 @@ public class VechicleVariantDAOImpl implements VechicleVariantDAO {
 	public void removeVechicleVariant(int id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<VechicleVariant> listVechicleVariants(Integer vechicleModalId) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria c = session.createCriteria(VechicleVariant.class);	
+		c.add( Restrictions.eq("vechicleModal.id", vechicleModalId) );
+		return c.list();
 	}
 
 }

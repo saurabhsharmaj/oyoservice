@@ -1,11 +1,14 @@
 package org.phstudy.sample.model;
 // Generated Jan 28, 2017 3:06:49 PM by Hibernate Tools 5.1.0.Alpha1
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,7 +22,8 @@ public class VechicleVariant implements java.io.Serializable {
 	private VechicleModal modal;
 	private String name;
 	private String description;
-
+	private VechicleModal vechicleModal;
+	
 	public VechicleVariant() {
 	}
 
@@ -63,5 +67,17 @@ public class VechicleVariant implements java.io.Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "modal_id")
+	public VechicleModal getVechicleModal() {
+		return vechicleModal;
+	}
+
+	public void setVechicleModal(VechicleModal vechicleModal) {
+		this.vechicleModal = vechicleModal;
+	}
+	
+	
 
 }

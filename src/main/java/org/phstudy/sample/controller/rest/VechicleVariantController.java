@@ -7,6 +7,7 @@ import org.phstudy.sample.service.VechicleVariantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class VechicleVariantController {
 	@Autowired
 	VechicleVariantService serviceTypeService;
 	
-	@RequestMapping(value = "/rest/vechiclevariant", method = RequestMethod.GET)
+	@RequestMapping(value = "/rest/vechiclevariants", method = RequestMethod.GET)
 	public String serviceTypes() {
 		List<VechicleVariant> serviceTypes = serviceTypeService.listVechicleVariants();
 		JsonArray array = new JsonArray();
@@ -34,6 +35,16 @@ public class VechicleVariantController {
 		return array.toString();
 	}
 
+	@RequestMapping(value = "/rest/vechiclevariants/{vechicleModalId}", method = RequestMethod.GET)
+	public String serviceTypes(@PathVariable Integer vechicleModalId) {
+		List<VechicleVariant> serviceTypes = serviceTypeService.listVechicleVariants(vechicleModalId);
+		JsonArray array = new JsonArray();
+		for (VechicleVariant serviceType : serviceTypes) {
+			array.add(toJson(serviceType));
+		}
+		return array.toString();
+	}
+	
 	private JsonElement toJson(VechicleVariant serviceType) {
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty("id", serviceType.getId());

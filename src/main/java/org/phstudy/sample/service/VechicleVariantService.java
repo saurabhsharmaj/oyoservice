@@ -14,4 +14,6 @@ public interface VechicleVariantService {
 	public VechicleVariant getVechicleVariantById(int id);
 
 	public void removeVechicleVariant(int id);
+
+	public List<VechicleVariant> listVechicleVariants(Integer vechicleModalId);
 }
