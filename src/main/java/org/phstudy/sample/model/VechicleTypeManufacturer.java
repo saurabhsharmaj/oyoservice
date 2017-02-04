@@ -2,11 +2,14 @@ package org.phstudy.sample.model;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
-import javax.persistence.EmbeddedId;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "vehicaltype_has_manufacture")
@@ -17,55 +20,30 @@ import javax.persistence.Transient;
 			joinColumns = @JoinColumn(name = "vehicaltype_id")) })
 public class VechicleTypeManufacturer implements java.io.Serializable {
 
-	private VechicleTypeManufacturerID pk = new VechicleTypeManufacturerID();
+	@Id
+    @AttributeOverrides({
+    @AttributeOverride(name = "vechicleType",
+    column = @Column(name="id")),
+    @AttributeOverride(name = "manufacturerType",
+    column = @Column(name="id"))
+    })
+	private VechicleType vechicleType;
+	private ManufacturerType manufacturerType;
 	
-
-	public VechicleTypeManufacturer() {
-	}
-
-	@EmbeddedId
-	public VechicleTypeManufacturerID getPk() {
-		return pk;
-	}
-
-	public void setPk(VechicleTypeManufacturerID pk) {
-		this.pk = pk;
-	}
-
-	@Transient
+	@ManyToOne
 	public VechicleType getVechicleType() {
-		return getPk().getVechicleType();
+		return vechicleType;
 	}
-
-	public void setStock(VechicleType stock) {
-		getPk().setVechicleType(stock);
-	}
-
-	@Transient
-	public ManufacturerType getManufacturerType() {
-		return getPk().getManufacturerType();
-	}
-
-	public void setManufacturerType(ManufacturerType category) {
-		getPk().setManufacturerType(category);
+	public void setVechicleType(VechicleType vechicleType) {
+		this.vechicleType = vechicleType;
 	}
 	
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-
-		VechicleTypeManufacturer that = (VechicleTypeManufacturer) o;
-
-		if (getPk() != null ? !getPk().equals(that.getPk())
-				: that.getPk() != null)
-			return false;
-
-		return true;
+	@ManyToOne
+	public ManufacturerType getManufacturerType() {
+		return manufacturerType;
 	}
-
-	public int hashCode() {
-		return (getPk() != null ? getPk().hashCode() : 0);
+	public void setManufacturerType(ManufacturerType manufacturerType) {
+		this.manufacturerType = manufacturerType;
 	}
+	
 }
