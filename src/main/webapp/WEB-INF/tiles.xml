@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	
+	<definition name="base-without-menu.definition" template="/WEB-INF/views/base-without-menu.jsp">
+		<put-attribute name="title" value="IdLink"></put-attribute>
+		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
+		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
+		<put-attribute name="body" value=""></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
+	</definition>
+	
+</tiles-definitions>
