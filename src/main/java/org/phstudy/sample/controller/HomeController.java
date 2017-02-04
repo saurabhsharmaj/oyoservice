@@ -5,23 +5,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.RandomUtils;
-import org.phstudy.sample.model.Book;
 import org.phstudy.sample.model.ServiceCenter;
-import org.phstudy.sample.repository.BookRepository;
 import org.phstudy.sample.service.ServiceCenterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
@@ -40,10 +32,7 @@ import net._01001111.text.LoremIpsum;
 public class HomeController {
 	
 	@Autowired
-	ServiceCenterService serviceCenterService; 
-	
-	@Resource
-	private BookRepository bookRepository;
+	ServiceCenterService serviceCenterService; 	
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
@@ -58,7 +47,7 @@ public class HomeController {
 	private void initData() {
 		List<IndexQuery> indexQueries = new ArrayList<IndexQuery>();
 		LoremIpsum lorem = new LoremIpsum();
-		for (int i = MINCOUNT; i < MAXCOUNT; i++) {
+		for (int i = MINCOUNT; i < MAXCOUNT; i++) {/*
 			String documentId = UUID.randomUUID().toString();
 			Book book = new Book();
 			book.setId(documentId);
@@ -68,7 +57,7 @@ public class HomeController {
 			IndexQuery indexQuery = new IndexQueryBuilder()
 					.withId(book.getId()).withObject(book).build();
 			indexQueries.add(indexQuery);
-		}
+		*/}
 		
 		
 		List<ServiceCenter> serviceCenters = serviceCenterService.listServiceCenters();
@@ -104,7 +93,7 @@ public class HomeController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String traditional(Locale locale, Model model,
 			@RequestParam(value = "query", required = false) String query,
-			@RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page, @RequestParam(value = "size", required = false, defaultValue = "10") int size) {/*
 
 		page -= 1;
 
@@ -121,7 +110,7 @@ public class HomeController {
 		model.addAttribute("books", pageObj.getContent());
 		model.addAttribute("page", page + 1);
 		
-		return "traditionalPage";
+	*/	return "traditionalPage";
 	}
 
 	@RequestMapping(value = "/httpservletrequest", method = RequestMethod.GET)

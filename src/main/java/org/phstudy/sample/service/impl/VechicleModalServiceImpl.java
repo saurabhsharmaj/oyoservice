@@ -45,4 +45,9 @@ public class VechicleModalServiceImpl implements VechicleModalService {
 		serviceModalDAO.removeVechicleModal(id);
 	}
 
+	@Override
+	public List<VechicleModal> listVechicleModals(Integer manufacturerId) {
+		return serviceModalDAO.listVechicleModals(manufacturerId);
+	}
+
 }

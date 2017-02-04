@@ -14,4 +14,6 @@ public interface VechicleModalDAO {
 	public VechicleModal getVechicleModalById(int id);
 
 	public void removeVechicleModal(int id);
+
+	public List<VechicleModal> listVechicleModals(Integer manufacturerId);
 }

@@ -76,7 +76,7 @@ function getManufacturer(vechicleType){
 }
 
 function getModals(manufacturerId){
-	$.getJSON("rest/modal/"+manufacturerId).done(function (response) {
+	$.getJSON("rest/vechiclemodal/"+manufacturerId).done(function (response) {
 		 $("#modal option").remove(); // Remove all <option> child tags.
 		 $("#modal").append( // Append an object to the inside of the select box
 		            $("<option></option>") // Yes you can do this.
@@ -86,7 +86,7 @@ function getModals(manufacturerId){
 		 $.each(response, function(index, item) { // Iterates through a collection
 		        $("#modal").append( // Append an object to the inside of the select box
 		            $("<option></option>") // Yes you can do this.
-		                .text(item.vechicleName)
+		                .text(item.vechicleModal)
 		                .val(item.id)
 		        );
 		    });

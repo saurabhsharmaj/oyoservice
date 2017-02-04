@@ -1,14 +1,14 @@
 package org.phstudy.sample.model;
 // Generated Jan 28, 2017 3:06:49 PM by Hibernate Tools 5.1.0.Alpha1
 
-import java.util.HashSet;
-import java.util.Set;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -21,8 +21,8 @@ public class VechicleModal implements java.io.Serializable {
 	private Integer id;
 	private String modalname;
 	private String image;
-	private Set<VechicleVariant> variants = new HashSet<VechicleVariant>(0);
-
+	private ManufacturerType manufacturerType;
+	
 	public VechicleModal() {
 	}
 
@@ -30,11 +30,10 @@ public class VechicleModal implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public VechicleModal(Integer id, String modalname, String image, Set<VechicleVariant> variants) {
+	public VechicleModal(Integer id, String modalname, String image) {
 		this.id = id;
 		this.modalname = modalname;
 		this.image = image;
-		this.variants = variants;
 	}
 
 	@Id
@@ -67,4 +66,15 @@ public class VechicleModal implements java.io.Serializable {
 		this.image = image;
 	}
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "manufacture_id")	
+	public ManufacturerType getManufacturerType() {
+		return manufacturerType;
+	}
+
+	public void setManufacturerType(ManufacturerType manufacturerType) {
+		this.manufacturerType = manufacturerType;
+	}
+	
+	
 }

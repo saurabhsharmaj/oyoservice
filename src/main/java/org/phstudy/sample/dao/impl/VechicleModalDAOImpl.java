@@ -2,8 +2,10 @@ package org.phstudy.sample.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.phstudy.sample.dao.VechicleModalDAO;
 import org.phstudy.sample.model.VechicleModal;
 import org.slf4j.Logger;
@@ -52,6 +54,15 @@ public class VechicleModalDAOImpl implements VechicleModalDAO {
 	public void removeVechicleModal(int id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<VechicleModal> listVechicleModals(Integer manufacturerId) {		
+		Session session = sessionFactory.getCurrentSession();
+		Criteria c = session.createCriteria(VechicleModal.class);	
+		c.add( Restrictions.eq("manufacturerType.id", manufacturerId) );
+		return c.list();	
+
 	}
 
 }
