@@ -380,6 +380,14 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
+DROP TABLE IF EXISTS `OYOSERVICE`.`servicecenter_has_bookservice` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `OYOSERVICE`.`vehicaltype_has_manufacture` (
+  `vehicaltype_id` INT NOT NULL COMMENT '',
+  `manufacture_id` INT NOT NULL COMMENT '')
+ENGINE = InnoDB;
+
 COMMIT;
 
 INSERT INTO `oyoservice`.`customerdetail` (`id`, `firstname`, `lastname`, `emailid`, `contactno`) VALUES ('1', 'SAURABH', 'SHARMA', 'SAURABH.FIND@GMAIL.COM', '1234567890');
@@ -431,4 +439,15 @@ INSERT INTO `oyoservice`.`bookservice_has_customerdetail` (`bookservice_id`, `bo
 INSERT INTO `oyoservice`.`deal` (`id`, `dealtype`, `startdate`, `enddate`) VALUES ('1', '10% Discount', '2017-01-28 14:46:37', '2017-01-30 14:46:37');
 
 INSERT INTO `oyoservice`.`servicecenter_has_deal` (`servicecenter_id`, `deal_id`) VALUES ('1', '1');
+
+
+INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufacture_id`) VALUES (1,2);
+INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufacture_id`) VALUES (1,3);
+INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufacture_id`) VALUES (1,5);
+
+INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufacture_id`) VALUES (2,5);
+
+INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufacture_id`) VALUES (3,1);
+INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufacture_id`) VALUES (3,3);
+INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufacture_id`) VALUES (3,4);
 

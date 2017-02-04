@@ -7,6 +7,7 @@ import org.phstudy.sample.service.ManufacturerTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,16 @@ public class ManufacturerTypeController {
 	@RequestMapping(value = "/rest/manufacturertypes", method = RequestMethod.GET)
 	public String serviceTypes() {
 		List<ManufacturerType> serviceTypes = serviceTypeService.listManufacturerTypes();
+		JsonArray array = new JsonArray();
+		for (ManufacturerType serviceType : serviceTypes) {
+			array.add(toJson(serviceType));
+		}
+		return array.toString();
+	}
+	
+	@RequestMapping(value = "/rest/manufacturertype/{vechicleType}", method = RequestMethod.GET)
+	public String serviceTypes(@PathVariable Integer vechicleType) {
+		List<ManufacturerType> serviceTypes = serviceTypeService.listManufacturerTypes(vechicleType);
 		JsonArray array = new JsonArray();
 		for (ManufacturerType serviceType : serviceTypes) {
 			array.add(toJson(serviceType));

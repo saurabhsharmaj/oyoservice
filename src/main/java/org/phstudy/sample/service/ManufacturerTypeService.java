@@ -14,4 +14,6 @@ public interface ManufacturerTypeService {
 	public ManufacturerType getManufacturerTypeById(int id);
 
 	public void removeManufacturerType(int id);
+
+	public List<ManufacturerType> listManufacturerTypes(Integer vechicleType);
 }

@@ -45,4 +45,9 @@ public class ManufacturerTypeServiceImpl implements ManufacturerTypeService {
 		serviceTypeDAO.removeManufacturerType(id);
 	}
 
+	@Override
+	public List<ManufacturerType> listManufacturerTypes(Integer vechicleType) {
+		return serviceTypeDAO.listManufacturerTypes(vechicleType);
+	}
+
 }

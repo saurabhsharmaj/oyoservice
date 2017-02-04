@@ -3,6 +3,8 @@ package org.phstudy.sample.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,6 +26,7 @@ public class VechicleType implements java.io.Serializable {
 	private String name;
 	private String description;
 	private Set<ServiceCenter> servicecenters = new HashSet<ServiceCenter>(0);
+	private Set<ManufacturerType> manufacturerTypes;
 
 	public VechicleType() {
 	}
@@ -76,5 +79,18 @@ public class VechicleType implements java.io.Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "vehicaltype_has_manufacture", joinColumns = {
+			@JoinColumn(name = "manufacture_id", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "id",
+					nullable = false, updatable = false) })
+	public Set<ManufacturerType> getManufacturerTypes() {
+		return this.manufacturerTypes;
+	}
+
+	public void setManufacturerTypes(Set<ManufacturerType> manufacturerTypes) {
+		this.manufacturerTypes = manufacturerTypes;
 	}
 }

@@ -58,7 +58,7 @@ $( document ).ready(function() {
 });
 
 function getManufacturer(vechicleType){
-	$.getJSON("rest/manufacturer/"+vechicleType).done(function (response) {
+	$.getJSON("rest/manufacturertype/"+vechicleType).done(function (response) {
 		 $("#manufacturer option").remove(); // Remove all <option> child tags.
 		 $("#manufacturer").append( // Append an object to the inside of the select box
 		            $("<option></option>") // Yes you can do this.
@@ -68,7 +68,7 @@ function getManufacturer(vechicleType){
 		 $.each(response, function(index, item) { // Iterates through a collection
 		        $("#manufacturer").append( // Append an object to the inside of the select box
 		            $("<option></option>") // Yes you can do this.
-		                .text(item.vechicleName)
+		                .text(item.name)
 		                .val(item.id)
 		        );
 		    });

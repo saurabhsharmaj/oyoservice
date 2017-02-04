@@ -3,11 +3,15 @@ package org.phstudy.sample.model;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,6 +25,7 @@ public class ManufacturerType implements java.io.Serializable {
 	private String name;
 	private String logo;
 	private Set<VechicleModal> modals = new HashSet<VechicleModal>(0);
+	private Set<VechicleType> vechicleTypes;
 
 	public ManufacturerType() {
 	}
@@ -65,4 +70,16 @@ public class ManufacturerType implements java.io.Serializable {
 		this.logo = logo;
 	}	
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "vehicaltype_has_manufacture", joinColumns = {
+			@JoinColumn(name = "manufacture_id", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "vehicaltype_id",
+					nullable = false, updatable = false) })
+	public Set<VechicleType> getVechicleTypes() {
+		return this.vechicleTypes;
+	}
+
+	public void setVechicleTypes(Set<VechicleType> vechicleTypes) {
+		this.vechicleTypes = vechicleTypes;
+	}
 }
