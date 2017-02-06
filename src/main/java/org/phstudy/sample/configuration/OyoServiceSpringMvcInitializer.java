@@ -13,7 +13,7 @@ public class OyoServiceSpringMvcInitializer extends AbstractAnnotationConfigDisp
     @Override
     protected Class<?>[] getRootConfigClasses() {
     	new File(OyoServiceConstant.TEMP_DIR).mkdirs();
-        return new Class[] { OyoServiceConfiguration.class };
+        return new Class[] { OyoServiceConfiguration.class,SecurityWebApplicationInitializer.class};
     }
   
     @Override

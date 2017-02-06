@@ -451,3 +451,51 @@ INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufa
 INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufacture_id`) VALUES (3,3);
 INSERT INTO `oyoservice`.`vehicaltype_has_manufacture`(`vehicaltype_id`, `manufacture_id`) VALUES (3,4);
 
+create table user_accounts(
+			id int,
+			email varchar(45),
+			first_name varchar(45),
+			last_name varchar(45),
+			password varchar(45),
+			role varchar(20),
+			sign_in_provider varchar(20));
+
+INSERT INTO `oyoservice`.`user_accounts`
+(`id`,
+`email`,
+`first_name`,
+`last_name`,
+`password`,
+`role`,
+`sign_in_provider`)
+VALUES
+(1,
+'saurabh.find@gmail.com',
+'saurabh',
+'sharma',
+'XXXX',
+'1',
+'0');
+
+ALTER TABLE `oyoservice`.`user_accounts` 
+ADD COLUMN `creation_time` DATETIME NULL COMMENT '' AFTER `sign_in_provider`,
+ADD COLUMN `modification_time` DATETIME NULL COMMENT '' AFTER `creation_time`;
+
+
+  
+CREATE INDEX user_account_email ON user_accounts (email);
+
+CREATE TABLE `user_role` (
+  `id` INT NOT NULL COMMENT '',
+  `email` VARCHAR(45) NULL COMMENT '',
+  `role` VARCHAR(45) NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  UNIQUE INDEX `role_email_UNIQUE` (role, email)  COMMENT '',
+  CONSTRAINT `email`
+    FOREIGN KEY (`email`)
+    REFERENCES `oyoservice`.`user_accounts` (`email`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+    
+INSERT INTO `oyoservice`.`user_role` (`id`, `email`, `role`) VALUES ('1', 'saurabh.find@gmail.com', 'ADMIN');
+

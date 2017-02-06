@@ -29,15 +29,5 @@ public class ElasticsearchConfig {
 	        .addTransportAddress(new InetSocketTransportAddress("192.168.1.176", 9300));
 		 
 		 return new ElasticsearchTemplate(client);
-
-		// node client
-		//		return new ElasticsearchTemplate(nodeBuilder()
-		//				.local(true)
-		//				.settings(
-		//						ImmutableSettings.settingsBuilder()
-		//								.put("cluster.name", "elasticsearch")
-		//								.put("username", "myname")
-		//								.put("password", "mypassword").build()).node()
-		//				.client());
 	}
 }

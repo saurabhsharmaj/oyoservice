@@ -14,6 +14,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
@@ -39,8 +41,12 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(basePackages = "org.phstudy")
+@PropertySource("classpath:application.properties")
+@Import({ OyoServiceSecurityConfig.class })
 public class OyoServiceConfiguration extends WebMvcConfigurerAdapter{
 
+	private static final String MESSAGE_SOURCE_BASE_NAME = "messages";
+			
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
@@ -134,10 +140,10 @@ public class OyoServiceConfiguration extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {    	
-		OyoServiceExceptionResolver simpleMappingExceptionResolver = new OyoServiceExceptionResolver();
-		simpleMappingExceptionResolver.setDefaultErrorView("error");
-		simpleMappingExceptionResolver.setDefaultStatusCode(500);
-		exceptionResolvers.add(simpleMappingExceptionResolver);
+    	OyoServiceExceptionResolver simpleMappingExceptionResolver = new OyoServiceExceptionResolver();
+        simpleMappingExceptionResolver.setDefaultErrorView("error");
+        simpleMappingExceptionResolver.setDefaultStatusCode(500);
+        exceptionResolvers.add(simpleMappingExceptionResolver);
 		super.configureHandlerExceptionResolvers(exceptionResolvers);
 	}
 

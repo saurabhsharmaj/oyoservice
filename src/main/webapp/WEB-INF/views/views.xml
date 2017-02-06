@@ -9,18 +9,14 @@
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="servicecenterPage" extends="base-without-menu.definition">
-	 	<put-attribute name="title" value="Service Center | Home"></put-attribute>	 	   
-		<put-attribute name="body" value="/WEB-INF/views/servicecenter.jsp"></put-attribute>
+	<definition name="loginPage" extends="base-without-menu.definition">
+	 	<put-attribute name="title" value="Login Page"></put-attribute>	 	   
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="traditionalPage" extends="base-without-menu.definition">
-	 	<put-attribute name="title" value="Service Center | Traditional Page"></put-attribute>	 	   
-		<put-attribute name="body" value="/WEB-INF/views/traditional.jsp"></put-attribute>
+	<definition name="registrationPage" extends="base-without-menu.definition">
+	 	<put-attribute name="title" value="Registration Page"></put-attribute>	 	   
+		<put-attribute name="body" value="/WEB-INF/views/registration.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="bookPage" extends="base-without-menu.definition">
-	 	<put-attribute name="title" value="Service Center | Book"></put-attribute>	 	   
-		<put-attribute name="body" value="/WEB-INF/views/book.jsp"></put-attribute>
-	</definition>
 </tiles-definitions>
