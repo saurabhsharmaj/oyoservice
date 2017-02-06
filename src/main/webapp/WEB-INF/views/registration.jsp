@@ -1,70 +1,117 @@
-<!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <html>
+
 <head>
-    <title></title>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/app/user.form.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>User Registration Form</title>
+	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
+	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 </head>
+
 <body>
-    <div class="page-header">
-        <h1><spring:message code="label.user.registration.page.title"/></h1>
-    </div>
-    <sec:authorize access="isAnonymous()">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <form:form action="${pageContext.request.contextPath}/user/register" commandName="user" method="POST" enctype="utf8" role="form">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <c:if test="${user.signInProvider != null}">
-                        <form:hidden path="signInProvider"/>
-                    </c:if>
-                    <div class="row">
-                        <div id="form-group-firstName" class="form-group col-lg-4">
-                            <label class="control-label" for="user-firstName"><spring:message code="label.user.firstName"/>:</label>
-                            <form:input id="user-firstName" path="firstName" cssClass="form-control"/>
-                            <form:errors id="error-firstName" path="firstName" cssClass="help-block"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div id="form-group-lastName" class="form-group col-lg-4">
-                            <label class="control-label" for="user-lastName"><spring:message code="label.user.lastName"/>:</label>
-                            <form:input id="user-lastName" path="lastName" cssClass="form-control"/>
-                            <form:errors id="error-lastName" path="lastName" cssClass="help-block"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div id="form-group-email" class="form-group col-lg-4">
-                            <label class="control-label" for="user-email"><spring:message code="label.user.email"/>:</label>
-                            <form:input id="user-email" path="email" cssClass="form-control"/>
-                            <form:errors id="error-email" path="email" cssClass="help-block"/>
-                        </div>
-                    </div>
-                    <c:if test="${user.signInProvider == null}">
-                        <div class="row">
-                            <div id="form-group-password" class="form-group col-lg-4">
-                                <label class="control-label" for="user-password"><spring:message code="label.user.password"/>:</label>
-                                <form:password id="user-password" path="password" cssClass="form-control"/>
-                                <form:errors id="error-password" path="password" cssClass="help-block"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div id="form-group-passwordVerification" class="form-group col-lg-4">
-                                <label class="control-label" for="user-passwordVerification"><spring:message code="label.user.passwordVerification"/>:</label>
-                                <form:password id="user-passwordVerification" path="passwordVerification" cssClass="form-control"/>
-                                <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
-                            </div>
-                        </div>
-                    </c:if>
-                    <button type="submit" class="btn btn-default"><spring:message code="label.user.registration.submit.button"/></button>
-                </form:form>
-            </div>
-        </div>
-    </sec:authorize>
-    <sec:authorize access="isAuthenticated()">
-        <p><spring:message code="text.registration.page.authenticated.user.help"/></p>
-    </sec:authorize>
+ 	<div class="generic-container">
+		<%@include file="authheader.jsp" %>
+
+		<div class="well lead">User Registration Form</div>
+	 	<form:form method="POST" modelAttribute="user" class="form-horizontal">
+			<form:input type="hidden" path="id" id="id"/>
+			
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-3 control-lable" for="firstName">First Name</label>
+					<div class="col-md-7">
+						<form:input type="text" path="firstName" id="firstName" class="form-control input-sm"/>
+						<div class="has-error">
+							<form:errors path="firstName" class="help-inline"/>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-3 control-lable" for="lastName">Last Name</label>
+					<div class="col-md-7">
+						<form:input type="text" path="lastName" id="lastName" class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="lastName" class="help-inline"/>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-3 control-lable" for="ssoId">SSO ID</label>
+					<div class="col-md-7">
+						<c:choose>
+							<c:when test="${edit}">
+								<form:input type="text" path="ssoId" id="ssoId" class="form-control input-sm" disabled="true"/>
+							</c:when>
+							<c:otherwise>
+								<form:input type="text" path="ssoId" id="ssoId" class="form-control input-sm" />
+								<div class="has-error">
+									<form:errors path="ssoId" class="help-inline"/>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-3 control-lable" for="password">Password</label>
+					<div class="col-md-7">
+						<form:input type="password" path="password" id="password" class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="password" class="help-inline"/>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-3 control-lable" for="email">Email</label>
+					<div class="col-md-7">
+						<form:input type="text" path="email" id="email" class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="email" class="help-inline"/>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-3 control-lable" for="userProfiles">Roles</label>
+					<div class="col-md-7">
+						<form:select path="userProfiles" items="${roles}" multiple="true" itemValue="id" itemLabel="type" class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="userProfiles" class="help-inline"/>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="form-actions floatRight">
+					<c:choose>
+						<c:when test="${edit}">
+							<input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
+						</c:when>
+						<c:otherwise>
+							<input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/list' />">Cancel</a>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</form:form>
+	</div>
 </body>
 </html>
