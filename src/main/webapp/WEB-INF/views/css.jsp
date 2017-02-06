@@ -4,5 +4,5 @@
 <link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/resources/css/stylesheet.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/gui.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/app.css" rel="stylesheet" type="text/css" />

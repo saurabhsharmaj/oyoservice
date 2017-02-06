@@ -6,33 +6,57 @@
 	
 	<definition name="homePage" extends="base-without-menu.definition">
 	 	<put-attribute name="title" value="Service Center | Home"></put-attribute>	 	   
+		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
+		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="loginPage" extends="base-without-menu.definition">
 	 	<put-attribute name="title" value="Login Page"></put-attribute>	 	   
+		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
+		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/login.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="userslistPage" extends="base-without-menu.definition">
 	 	<put-attribute name="title" value="Registration Page"></put-attribute>	 	   
+		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
+		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/userslist.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="registrationPage" extends="base-without-menu.definition">
 	 	<put-attribute name="title" value="Registration Page"></put-attribute>	 	   
+	 	<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
+		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/registration.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="registrationsuccessPage" extends="base-without-menu.definition">
 	 	<put-attribute name="title" value="Registration Page"></put-attribute>	 	   
+		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
+		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/registrationsuccess.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
 	</definition>
 	
 	
 	<definition name="accessDeniedPage" extends="base-without-menu.definition">
 	 	<put-attribute name="title" value="Registration Page"></put-attribute>	 	   
+		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
+		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/accessDenied.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
 	</definition>
 	
 	

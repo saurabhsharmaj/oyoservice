@@ -1,15 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Use @RequestParam to fetch HTTP GET parameter</title>
-</head>
-<body>
 	<div class="container">
 		<div class="row">
 			<form id="myForm" class="navbar-form navbar-left" data-keyboard="false" role="search">
@@ -125,6 +116,4 @@
 			refreshTable('', 1);
 		});
 	</script>
-</body>
 
-</html>
