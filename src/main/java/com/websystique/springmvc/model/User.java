@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Entity
 @Table(name="APP_USER")
@@ -147,6 +148,16 @@ public class User implements Serializable{
 		return "User [id=" + id + ", ssoId=" + ssoId + ", password=" + password
 				+ ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", email=" + email + "]";
+	}
+
+	public RequestMapping getRole() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public RequestMapping getSignInProvider() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

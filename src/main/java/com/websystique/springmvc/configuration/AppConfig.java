@@ -1,21 +1,33 @@
 package com.websystique.springmvc.configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 import com.websystique.springmvc.converter.RoleToUserProfileConverter;
+import com.websystique.springmvc.exception.OyoServiceExceptionResolver;
+import com.websystique.springmvc.utils.JsonViewResolver;
 
 
 @Configuration
@@ -28,27 +40,68 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	RoleToUserProfileConverter roleToUserProfileConverter;
 	
 
-	/**
-     * Configure ViewResolvers to deliver preferred views.
-     */
 	@Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
+		resolver.setFallbackPageable(new PageRequest(0, 50));
+		argumentResolvers.add(resolver);
+		super.addArgumentResolvers(argumentResolvers);
+	}
 
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
-		registry.viewResolver(viewResolver);
+
+	@Bean
+    public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
+        ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+        resolver.setContentNegotiationManager(manager);
+        List<ViewResolver> resolvers = new ArrayList<ViewResolver>();       
+        resolvers.add(viewResolver());  
+        resolvers.add(jsonViewResolver());  
+        resolver.setViewResolvers(resolvers);
+        return resolver;
+    }
+	
+	@Bean
+	public ViewResolver jsonViewResolver() {
+		return new JsonViewResolver();
+	}
+
+	@Bean
+	TilesViewResolver viewResolver(){
+		TilesViewResolver viewResolver = new TilesViewResolver();
+		return viewResolver;
+	}
+
+	@Bean
+	TilesConfigurer tilesConfigurer(){
+		TilesConfigurer tilesConfigurer = new TilesConfigurer();
+		tilesConfigurer.setDefinitions("WEB-INF/tiles.xml","WEB-INF/views/**/views.xml");
+		tilesConfigurer.setPreparerFactoryClass(org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory.class);
+		return tilesConfigurer;    
 	}
 	
-	/**
-     * Configure ResourceHandlers to serve static resources like CSS/ Javascript etc...
-     */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
-    }
-    
+	/*
+	 * Configure ResourceHandlers to serve static resources like CSS/ Javascript etc...
+	 */
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+	}
+
+
+	@Override
+	public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {    	
+    	OyoServiceExceptionResolver simpleMappingExceptionResolver = new OyoServiceExceptionResolver();
+        simpleMappingExceptionResolver.setDefaultErrorView("error");
+        simpleMappingExceptionResolver.setDefaultStatusCode(500);
+        exceptionResolvers.add(simpleMappingExceptionResolver);
+		super.configureHandlerExceptionResolvers(exceptionResolvers);
+	}
+
+	@Bean(name = "multipartResolver")
+	public StandardServletMultipartResolver resolver() {
+		return new StandardServletMultipartResolver();
+	}
+
     /**
      * Configure Converter to be used.
      * In our example, we need a converter to convert string values[Roles] to UserProfiles in newUser.jsp

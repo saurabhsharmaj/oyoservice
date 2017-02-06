@@ -1,14 +1,20 @@
 package com.websystique.springmvc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,10 +30,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.websystique.springmvc.model.ServiceCenter;
 import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.model.UserProfile;
+import com.websystique.springmvc.service.ServiceCenterService;
 import com.websystique.springmvc.service.UserProfileService;
 import com.websystique.springmvc.service.UserService;
+
+import net._01001111.text.LoremIpsum;
 
 
 
@@ -51,17 +61,64 @@ public class AppController {
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
 	
+	@Resource
+	private ElasticsearchTemplate elasticsearchTemplate;
+	
+	@Autowired
+	ServiceCenterService serviceCenterService; 
+	
+	private static final int MINCOUNT = 100;
+	private static final int MAXCOUNT = 10;
+	
+	@PostConstruct
+	private void initData() {
+		List<IndexQuery> indexQueries = new ArrayList<IndexQuery>();
+		LoremIpsum lorem = new LoremIpsum();
+		for (int i = MINCOUNT; i < MAXCOUNT; i++) {/*
+			String documentId = UUID.randomUUID().toString();
+			Book book = new Book();
+			book.setId(documentId);
+			book.setName(lorem.randomWord());
+			book.setMessage(lorem.sentence());
+			book.setPrice(RandomUtils.nextDouble());
+			IndexQuery indexQuery = new IndexQueryBuilder()
+					.withId(book.getId()).withObject(book).build();
+			indexQueries.add(indexQuery);
+		*/}
+		
+		
+		List<ServiceCenter> serviceCenters = serviceCenterService.listServiceCenters();
+		for (ServiceCenter servicecenter : serviceCenters) {
+			System.out.println(servicecenter);
+			IndexQuery indexQuery = new IndexQueryBuilder()
+					.withId(servicecenter.getId().toString()).withObject(servicecenter).build();
+			indexQueries.add(indexQuery);
+		}
+		
+		// bulk index
+				elasticsearchTemplate.bulkIndex(indexQueries);
+	}
 	
 	/**
 	 * This method will list all existing users.
 	 */
-	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	public String homePage(ModelMap model) {
+		model.addAttribute("url", "./rest/servicecenter");
+		return "homePage";
+	}
+	
+	
+	/**
+	 * This method will list all existing users.
+	 */
+	@RequestMapping(value = {"/list" }, method = RequestMethod.GET)
 	public String listUsers(ModelMap model) {
 
 		List<User> users = userService.findAllUsers();
 		model.addAttribute("users", users);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "userslist";
+		return "userslistPage";
 	}
 
 	/**
@@ -73,7 +130,7 @@ public class AppController {
 		model.addAttribute("user", user);
 		model.addAttribute("edit", false);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "registration";
+		return "registrationPage";
 	}
 
 	/**
@@ -85,7 +142,7 @@ public class AppController {
 			ModelMap model) {
 
 		if (result.hasErrors()) {
-			return "registration";
+			return "registrationPage";
 		}
 
 		/*
@@ -99,7 +156,7 @@ public class AppController {
 		if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
 			FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
 		    result.addError(ssoError);
-			return "registration";
+			return "registrationPage";
 		}
 		
 		userService.saveUser(user);
@@ -107,7 +164,7 @@ public class AppController {
 		model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		//return "success";
-		return "registrationsuccess";
+		return "registrationsuccessPage";
 	}
 
 
@@ -120,7 +177,7 @@ public class AppController {
 		model.addAttribute("user", user);
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "registration";
+		return "registrationPage";
 	}
 	
 	/**
@@ -132,7 +189,7 @@ public class AppController {
 			ModelMap model, @PathVariable String ssoId) {
 
 		if (result.hasErrors()) {
-			return "registration";
+			return "registrationPage";
 		}
 
 		/*//Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in UI which is a unique key to a User.
@@ -147,7 +204,7 @@ public class AppController {
 
 		model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "registrationsuccess";
+		return "registrationsuccessPage";
 	}
 
 	
@@ -175,7 +232,7 @@ public class AppController {
 	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "accessDenied";
+		return "accessDeniedPage";
 	}
 
 	/**
@@ -185,7 +242,7 @@ public class AppController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
 		if (isCurrentAuthenticationAnonymous()) {
-			return "login";
+			return "loginPage";
 	    } else {
 	    	return "redirect:/list";  
 	    }
