@@ -7,6 +7,7 @@
 		
 		 <sec:authorize  access="isAnonymous()">
         	<span class="floatRight"><a href="login">login</a></span> | <span class="floatRight"><a href="newuser">sign up</a></span>
+   		 	| <span class="floatRight"><a href="${pageContext.request.contextPath}/social/facebook/signin">Facebook sign up</a></span>
    		 </sec:authorize>
 	    <sec:authorize  access="isAuthenticated()">
 	        <span>Dear <strong>${loggedinuser}</strong>, Welcome to CrazyUsers.</span> <span class="floatRight"><a href="logout">Logout</a></span>

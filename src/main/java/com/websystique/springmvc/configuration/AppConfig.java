@@ -1,17 +1,28 @@
 package com.websystique.springmvc.configuration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.inject.Inject;
+
+import org.scribe.builder.api.FacebookApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.springframework.social.connect.support.ConnectionFactoryRegistry;
+import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
@@ -28,6 +39,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import com.websystique.springmvc.converter.RoleToUserProfileConverter;
 import com.websystique.springmvc.exception.OyoServiceExceptionResolver;
 import com.websystique.springmvc.utils.JsonViewResolver;
+import com.websystique.springmvc.utils.OAuthServiceProvider;
 
 
 @Configuration
@@ -130,5 +142,37 @@ public class AppConfig extends WebMvcConfigurerAdapter{
     public void configurePathMatch(PathMatchConfigurer matcher) {
         matcher.setUseRegisteredSuffixPatternMatch(true);
     }
+    
+    @Bean
+    public ConnectionFactoryLocator connectionFactoryLocator() {
+        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+        
+        registry.addConnectionFactory(new FacebookConnectionFactory(
+            environment.getProperty("app.config.oauth.facebook.apikey"),
+            environment.getProperty("app.config.oauth.facebook.apisecret"))); 
+       
+            
+        return registry;
+    }
+    
+    @Bean
+    public OAuth2Parameters oAuth2Parameters(){
+    	Map<String, List<String>> parameters= new HashMap<String, List<String>>();
+    	parameters.put("state", Arrays.asList(new String[]{"public"}));
+    	parameters.put("scope", Arrays.asList(environment.getProperty("app.config.oauth.facebook.scope").split(",")));
+    	parameters.put("redirect_uri", Arrays.asList(environment.getProperty("app.config.oauth.facebook.callback")));
+    	return new OAuth2Parameters(parameters);
+    	
+    }
+    
+    @Bean 
+    public OAuthServiceProvider<FacebookApi> facebookServiceProvider(){
+		return null;
+    	
+    }
+    
+    @Inject
+    private Environment environment;
+    
 }
 
