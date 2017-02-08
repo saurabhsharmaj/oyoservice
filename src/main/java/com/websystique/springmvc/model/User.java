@@ -1,6 +1,8 @@
 package com.websystique.springmvc.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Entity
@@ -159,6 +162,19 @@ public class User implements Serializable{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Collection<GrantedAuthority> getDefaultAuthorities() {
+        //make everyone ROLE_USER
+        Collection<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+        GrantedAuthority grantedAuthority = new GrantedAuthority() {
+            //anonymous inner type
+            public String getAuthority() {
+                return "USER";
+            }
+        }; 
+        grantedAuthorities.add(grantedAuthority);
+        return grantedAuthorities;
+    }
 
 
 	

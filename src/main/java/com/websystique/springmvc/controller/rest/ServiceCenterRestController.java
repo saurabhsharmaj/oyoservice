@@ -39,7 +39,7 @@ public class ServiceCenterRestController {
 			return serviceCenterRepository.findAll(pageable);
 		}
 		
-		List<ServiceCenter>list = serviceCenterRepository.find(query);
+		List<ServiceCenter>list = serviceCenterRepository.find(query.toLowerCase());
 		return new PageImpl<ServiceCenter>(list);
 	}
 }

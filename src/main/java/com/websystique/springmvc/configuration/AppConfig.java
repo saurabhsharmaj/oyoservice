@@ -39,6 +39,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import com.websystique.springmvc.converter.RoleToUserProfileConverter;
 import com.websystique.springmvc.exception.OyoServiceExceptionResolver;
 import com.websystique.springmvc.utils.JsonViewResolver;
+import com.websystique.springmvc.utils.OAuthServiceConfig;
 import com.websystique.springmvc.utils.OAuthServiceProvider;
 
 
@@ -166,11 +167,17 @@ public class AppConfig extends WebMvcConfigurerAdapter{
     }
     
     @Bean 
-    public OAuthServiceProvider<FacebookApi> facebookServiceProvider(){
-		return null;
-    	
+    public OAuthServiceProvider<FacebookApi> facebookServiceProvider(){		 
+    	return new OAuthServiceProvider(oAuthServiceConfig ());
     }
     
+    @Bean
+    public OAuthServiceConfig oAuthServiceConfig (){
+    	return new OAuthServiceConfig(environment.getProperty("app.config.oauth.facebook.apikey"),
+	            environment.getProperty("app.config.oauth.facebook.apisecret"),
+	            environment.getProperty("app.config.oauth.facebook.callback"), 
+	            FacebookApi.class);
+    }
     @Inject
     private Environment environment;
     

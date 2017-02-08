@@ -1,5 +1,8 @@
 package com.websystique.springmvc.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,8 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.facebook.api.FacebookProfile;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.oauth2.GrantType;
@@ -25,6 +30,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.websystique.springmvc.model.User;
+import com.websystique.springmvc.model.UserProfile;
+import com.websystique.springmvc.service.UserService;
 import com.websystique.springmvc.utils.FacebookUtil;
 import com.websystique.springmvc.utils.OAuthServiceProvider;
 
@@ -38,6 +46,9 @@ public class FacebookController<FacebookApi> {
 	private static final String PUBLISH_SUCCESS = "success";
 	private static final String PUBLISH_ERROR = "error";
 
+	@Autowired
+	UserService userService;
+	
 	@Autowired
 	private ConnectionFactoryLocator connectionFactoryLocator;
 
@@ -69,7 +80,6 @@ public class FacebookController<FacebookApi> {
 	}
 
 	@RequestMapping(value = "/callback", method = RequestMethod.GET)
-	@ResponseBody
 	public String postOnWall(@RequestParam("code") String code,
 			@RequestParam("state") String state, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -81,15 +91,41 @@ public class FacebookController<FacebookApi> {
 				.getAccessToken(Token.empty(), verifier);
 
 		FacebookTemplate template = new FacebookTemplate(accessToken.getToken());
-
-		FacebookProfile facebookProfile = template.userOperations()
-				.getUserProfile();
+		String [] fields = { "id", "email",  "first_name", "last_name" };
+		
+		org.springframework.social.facebook.api.User facebookProfile = template.fetchObject("me", org.springframework.social.facebook.api.User.class, fields);
 
 		String userId = facebookProfile.getId();
-
+		User user = userService.findBySSO(facebookProfile.getId());
+		if(user != null){			
+			//existing user.
+			user.setUserProfiles(getDefaultProfile());
+		} else {
+			//register new user;
+			user = new User();
+			user.setFirstName(facebookProfile.getFirstName());
+			user.setLastName(facebookProfile.getLastName());
+			user.setEmail(facebookProfile.getEmail());
+			user.setPassword("");
+			user.setSsoId(facebookProfile.getId());
+			user.setUserProfiles(getDefaultProfile());
+			userService.saveUser(user);
+		}
+		
+		Authentication auth =   new UsernamePasswordAuthenticationToken(user, null, user.getDefaultAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(auth);
 		LOGGER.info("Logged in User Id : {}", userId);
 
-		return PUBLISH_SUCCESS;
+		return "redirect:/userHome";
+	}
+
+	private Set<UserProfile> getDefaultProfile() {
+		Set<UserProfile> userProfiles = new HashSet<UserProfile>();
+		UserProfile profile = new UserProfile();
+		profile.setId(1);
+		profile.setType("USER");
+		userProfiles.add(profile);
+		return userProfiles;
 	}
 
 	@RequestMapping(value = "/callback", params = "error_reason", method = RequestMethod.GET)

@@ -108,6 +108,12 @@ public class AppController {
 		return "homePage";
 	}
 	
+	@RequestMapping(value = { "/userHome" }, method = RequestMethod.GET)
+	public String userHomePage(ModelMap model) {
+		model.addAttribute("url", "./rest/servicecenter");
+		return "userHomePage";
+	}
+	
 	
 	/**
 	 * This method will list all existing users.
