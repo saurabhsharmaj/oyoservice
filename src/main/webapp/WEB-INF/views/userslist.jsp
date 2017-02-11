@@ -4,8 +4,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
-	<div class="generic-container">
-		<%@include file="authheader.jsp" %>	
+	<div class="generic-container">		
 		<div class="panel panel-default">
 			  <!-- Default panel contents -->
 		  	<div class="panel-heading"><span class="lead">List of Users </span></div>
