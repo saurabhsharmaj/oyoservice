@@ -1,0 +1,102 @@
+*{
+    box-sizing:border-box;
+}
+.navbar-brand>img {
+    display: block;
+    width: 145px;
+}
+li.search-location {
+    display: -webkit-inline-box;
+    padding: 15px;
+}
+li.search-location a.btn {
+    margin: -1px;
+    padding: 9px;
+    line-height: 15px;
+    border: 2px solid;
+}
+li.search-location div {
+    padding: 0 !important;
+}
+li.search-location #location {
+    border: 0;
+    margin: 0px;
+    font-size: 1em;
+    outline: 1px solid white;
+}
+.fa-map-marker:before {
+    content: "\f041";
+    font-size: 2.9em;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+/* Navbar css end */
+
+/* Home page search form Css Start */
+	ul.our-services {
+	    list-style: none;
+	    min-height: 35px;
+	}
+
+	ul.our-services li {
+	    display: inline;
+	    margin: 10px;
+	    text-align: center;
+	}
+    .row.featured.same-height-row img {width: 250px;height: 250px;border-radius: 100%;border: 10px solid rgba(153, 153, 159, 0.22);}
+/* Home page search form Css end */
+
+
+/* Search Result page css Start */
+p.job__company {
+    margin: 10px 0;
+}
+
+.job__star + a {
+    margin: 10px 0;
+    display: block;
+    float: right;
+}
+ul.company-logo {
+    list-style: none;
+}
+
+ul.company-logo li {
+    list-style-type: none;
+    width: 12.5%;
+    float: left;
+    padding: 20px;
+}
+
+/* Service Booking css start */
+form.booking-frm {
+    width: 50%;
+    margin: 0 auto;
+    padding: 25px;
+    background: rgba(50, 52, 53, 0.02);
+    box-shadow: 0px 0 1px rgba(53, 50, 47, 0.43);
+}
+.form-group.frm-col-1{
+    padding:0 10px;
+    margin: 8px 0;
+}
+
+.form-group.frm-col-2 {
+    margin: 8px 0;
+    width: 50%;
+    float: left;
+    padding:0 10px;
+
+}
+p.text-center {
+    width: 100%;
+    display: block;
+}
+
+p.text-center span {
+    display: block;
+    margin: 10px;
+    color: darkgray;
+    font-size: 1.3em;
+}

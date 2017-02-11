@@ -28,7 +28,7 @@
 	 	<put-attribute name="title" value="Login Page"></put-attribute>	 	   
 		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
 		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
-		<put-attribute name="header" value="/WEB-INF/views/header-nologin.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/login.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
 	</definition>
@@ -70,50 +70,7 @@
 		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="serviceCenterDetailPage" extends="base-without-menu.definition">
-	 	<put-attribute name="title" value="Service Center's"></put-attribute>	 	   
-		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
-		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
-		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
-		<put-attribute name="body" value="/WEB-INF/views/servicecenterdetail.jsp"></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
-	</definition>
 	
-	<definition name="searchResultPage" extends="base-without-menu.definition">
-	 	<put-attribute name="title" value="Service Center's"></put-attribute>	 	   
-		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
-		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
-		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
-		<put-attribute name="body" value="/WEB-INF/views/searchresults.jsp"></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
-	</definition>
-	
-	<definition name="bookServicePage" extends="base-without-menu.definition">
-	 	<put-attribute name="title" value="Service Center's"></put-attribute>	 	   
-		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
-		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
-		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
-		<put-attribute name="body" value="/WEB-INF/views/bookservice.jsp"></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
-	</definition>
-	
-	<definition name="categoryPage" extends="base-without-menu.definition">
-	 	<put-attribute name="title" value="Service Center's"></put-attribute>	 	   
-		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
-		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
-		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
-		<put-attribute name="body" value="/WEB-INF/views/category.jsp"></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
-	</definition>
-	
-	<definition name="contactPage" extends="base-without-menu.definition">
-	 	<put-attribute name="title" value="Service Center's"></put-attribute>	 	   
-		<put-attribute name="stylecss" value="/WEB-INF/views/css.jsp"></put-attribute>
-		<put-attribute name="scriptjs" value="/WEB-INF/views/scriptjs.jsp"></put-attribute>
-		<put-attribute name="header" value="/WEB-INF/views/header.jsp"></put-attribute>
-		<put-attribute name="body" value="/WEB-INF/views/contact.jsp"></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp"></put-attribute>
-	</definition>
 	
 	
 </tiles-definitions>

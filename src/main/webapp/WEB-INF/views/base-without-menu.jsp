@@ -11,108 +11,73 @@
         <meta name="company" content="IdLink" />
         <meta name="abstract" content="Face Deteaction." />
 		
-	<title><tiles:insertAttribute name="title" ignore="true" /></title>
+	<title>
+		<tiles:insertAttribute name="title" ignore="true" />
+	</title>
   	<tiles:insertAttribute name="stylecss" />
 		
 </head>
 
-<body> 
-<script>
-var scheme="http";
-var hostName = "localhost";
-var portNo="8080";
-var contextPath="oyoservice"
-</script>
-<div id="wrapper" style="padding-bottom: 100px;">
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-			<tiles:insertAttribute name="header" />
-        </nav>        
-        <tiles:insertAttribute name="body" /> 
-                 
-</div>
-    <!-- /#wrapper -->
+<body>
 
-<!-- Custom Theme JavaScript -->
+<div id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true" class="modal fade">
+	<div class="modal-dialog modal-sm">
+<div class="modal-content">
+                <div class="modal-header">                    
+                    <h4 id="Login" class="modal-title">Customer login</h4>
+                </div>
+                <div class="modal-body">
+			
+					<div class="login-form">
+						<c:url var="loginUrl" value="/login" />
+						<form action="${loginUrl}" method="post" class="form-horizontal">
+							<c:if test="${param.error != null}">
+								<div class="alert alert-danger">
+									<p>Invalid username and password.</p>
+								</div>
+							</c:if>
+							<c:if test="${param.logout != null}">
+								<div class="alert alert-success">
+									<p>You have been logged out successfully.</p>
+								</div>
+							</c:if>
+							<div class="input-group input-sm">
+								<label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
+								<input type="text" class="form-control" id="username" name="ssoId" placeholder="Enter Username" required>
+							</div>
+							<div class="input-group input-sm">
+								<label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
+								<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+							</div>
+							<div class="input-group input-sm">
+                              <div class="checkbox">
+                                <label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>  
+                              </div>
+                            </div>
+							<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
+								
+							<div class="form-actions">
+								<input type="submit"
+									class="btn btn-block btn-primary btn-default" value="Log in">
+							</div>
+						</form>
+					</div>
+				
+</div>
+</div>
+</div>        
+</div>
+    
+<tiles:insertAttribute name="header" />
+<tiles:insertAttribute name="body" />  
 <tiles:insertAttribute name="footer" />
 <tiles:insertAttribute name="scriptjs" />
-<input type="hidden" id="main-error" name="main-error">
+    <!-- Javascript files-->
+   <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>   
+    <script type="text/javascript">
+           $(window).load(function(){
+                $('#onload').modal('show');
+            });
+    </script>
 </body>
-<script>
-$( document ).ready(function() {	
-			$.getJSON("rest/vechicletypes").done(function (response) {
-				 $("#vtype option").remove(); // Remove all <option> child tags.
-				 $("#vtype").append( // Append an object to the inside of the select box
-				            $("<option></option>") // Yes you can do this.
-				                .text("Select Vechicle Type")
-				                .val("-1")
-				        );  
-				 $.each(response, function(index, item) { // Iterates through a collection
-				        $("#vtype").append( // Append an object to the inside of the select box
-				            $("<option></option>") // Yes you can do this.
-				                .text(item.vechicleName)
-				                .val(item.id)
-				        );
-				    });
-			});
-});
-
-function getManufacturer(vechicleType){
-	$.getJSON("rest/manufacturertype/"+vechicleType).done(function (response) {
-		 $("#manufacturer option").remove(); // Remove all <option> child tags.
-		 $("#manufacturer").append( // Append an object to the inside of the select box
-		            $("<option></option>") // Yes you can do this.
-		                .text("Select Manufacturer")
-		                .val("-1")
-		        );  
-		 $.each(response, function(index, item) { // Iterates through a collection
-		        $("#manufacturer").append( // Append an object to the inside of the select box
-		            $("<option></option>") // Yes you can do this.
-		                .text(item.name)
-		                .val(item.id)
-		        );
-		    });
-	});
-}
-
-function getModals(manufacturerId){
-	$.getJSON("rest/vechiclemodal/"+manufacturerId).done(function (response) {
-		 $("#modal option").remove(); // Remove all <option> child tags.
-		 $("#modal").append( // Append an object to the inside of the select box
-		            $("<option></option>") // Yes you can do this.
-		                .text("Select Manufacturer")
-		                .val("-1")
-		        );  
-		 $.each(response, function(index, item) { // Iterates through a collection
-		        $("#modal").append( // Append an object to the inside of the select box
-		            $("<option></option>") // Yes you can do this.
-		                .text(item.vechicleModal)
-		                .val(item.id)
-		        );
-		    });
-	});
-}
-
-function getVariants(modalId){
-	$.getJSON("rest/vechiclevariants/"+modalId).done(function (response) {
-		 $("#variant option").remove(); // Remove all <option> child tags.
-		 $("#variant").append( // Append an object to the inside of the select box
-		            $("<option></option>") // Yes you can do this.
-		                .text("Select Variant Type")
-		                .val("-1")
-		        );  
-		 $.each(response, function(index, item) { // Iterates through a collection
-		        $("#variant").append( // Append an object to the inside of the select box
-		            $("<option></option>") // Yes you can do this.
-		                .text(item.variantName)
-		                .val(item.id)
-		        );
-		    });
-	});
-}
-
-function getVechicles(variantId){
-	alert( "Final Seach");
-}
-</script>
 </html>

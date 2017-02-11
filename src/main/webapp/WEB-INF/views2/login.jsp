@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="modal-dialog modal-sm">
-<div class="modal-content">
-                <div class="modal-header">                    
-                    <h4 id="Login" class="modal-title">Customer login</h4>
-                </div>
-                <div class="modal-body">
-			
+
+		<div id="mainWrapper">
+			<div class="login-container">
+				<div class="login-card">
 					<div class="login-form">
 						<c:url var="loginUrl" value="/login" />
 						<form action="${loginUrl}" method="post" class="form-horizontal">
@@ -42,7 +39,6 @@
 							</div>
 						</form>
 					</div>
-				
-</div>
-</div>
-</div>
+				</div>
+			</div>
+		</div>

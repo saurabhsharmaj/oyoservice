@@ -558,3 +558,48 @@ CREATE TABLE persistent_logins (
     last_used TIMESTAMP NOT NULL,
     PRIMARY KEY (series)
 );
+
+
+CREATE TABLE `oyoservice`.`country` (
+  `countryId` INT NOT NULL COMMENT '',
+  `countryname` VARCHAR(45) NULL COMMENT '',
+  PRIMARY KEY (`countryId`)  COMMENT '');
+
+ CREATE TABLE `oyoservice`.`states` (
+  `stateId` INT NOT NULL COMMENT '',
+  `stateName` VARCHAR(45) NULL COMMENT '',
+  `countryId` INT NULL COMMENT '',
+  PRIMARY KEY (`stateId`)  COMMENT '');
+
+CREATE TABLE `oyoservice`.`cities` (
+  `cityId` INT NOT NULL COMMENT '',
+  `cityName` VARCHAR(45) NULL COMMENT '',
+  `stateId` INT NULL COMMENT '',
+  PRIMARY KEY (`cityId`)  COMMENT '');
+  
+INSERT INTO `oyoservice`.`country` (`countryId`, `countryname`) VALUES ('1', 'India');
+INSERT INTO `oyoservice`.`country` (`countryId`, `countryname`) VALUES ('2', 'Nepal');
+INSERT INTO `oyoservice`.`country` (`countryId`, `countryname`) VALUES ('3', 'China');
+INSERT INTO `oyoservice`.`country` (`countryId`, `countryname`) VALUES ('4', 'USA');
+
+
+INSERT INTO `oyoservice`.`states` (`stateId`, `stateName`, `countryId`) VALUES ('1', 'Panjab', '1');
+INSERT INTO `oyoservice`.`states` (`stateId`, `stateName`, `countryId`) VALUES ('2', 'Rajasthan', '1');
+INSERT INTO `oyoservice`.`states` (`stateId`, `stateName`, `countryId`) VALUES ('3', 'Gujrat', '1');
+INSERT INTO `oyoservice`.`states` (`stateId`, `stateName`, `countryId`) VALUES ('4', 'Singapore', '3');
+INSERT INTO `oyoservice`.`states` (`stateId`, `stateName`, `countryId`) VALUES ('5', 'NewYork', '4');
+
+
+INSERT INTO `oyoservice`.`cities` (`cityId`, `cityName`, `stateId`) VALUES ('1', 'Jaipur', '2');
+INSERT INTO `oyoservice`.`cities` (`cityId`, `cityName`, `stateId`) VALUES ('2', 'Ajmer', '2');
+INSERT INTO `oyoservice`.`cities` (`cityId`, `cityName`, `stateId`) VALUES ('3', 'Bikaner', '2');
+
+
+ALTER TABLE `oyoservice`.`cities` 
+ADD INDEX `stateId_fk_idx` (`stateId` ASC)  COMMENT '';
+ALTER TABLE `oyoservice`.`cities` 
+ADD CONSTRAINT `stateId_fk`
+  FOREIGN KEY (`stateId`)
+  REFERENCES `oyoservice`.`states` (`stateId`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;

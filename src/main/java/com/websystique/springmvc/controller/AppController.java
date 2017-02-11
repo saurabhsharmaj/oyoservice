@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -105,7 +106,17 @@ public class AppController {
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String homePage(ModelMap model) {
 		model.addAttribute("url", "./rest/servicecenter");
+		
 		return "homePage";
+	}
+	
+	@RequestMapping(value={"/savepreferences"}, method = RequestMethod.GET)
+	public String hello(HttpServletRequest request,HttpServletResponse response) {
+		String vType = request.getParameter("vtype");
+		String city = request.getParameter("cities");
+		response.addCookie(new Cookie("vtype", vType));
+		response.addCookie(new Cookie("city", city));				
+		return "redirect:/home";
 	}
 	
 	@RequestMapping(value = { "/userHome" }, method = RequestMethod.GET)
@@ -184,6 +195,48 @@ public class AppController {
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "registrationPage";
+	}
+	
+	/**
+	 * This method will provide the medium to update an existing user.
+	 */
+	@RequestMapping(value = { "/search" }, method = RequestMethod.GET)
+	public String searchServiceCenter(ModelMap model) {		
+		return "searchResultPage";
+	}
+	
+	/**
+	 * This method will provide the medium to update an existing user.
+	 */
+	@RequestMapping(value = { "/bookservice" }, method = RequestMethod.GET)
+	public String bookService(ModelMap model) {		
+		return "bookServicePage";
+	}
+	
+	
+	/**
+	 * This method will provide the medium to update an existing user.
+	 */
+	@RequestMapping(value = { "/category" }, method = RequestMethod.GET)
+	public String category(ModelMap model) {		
+		return "categoryPage";
+	}
+	
+	
+	/**
+	 * This method will provide the medium to update an existing user.
+	 */
+	@RequestMapping(value = { "/contact" }, method = RequestMethod.GET)
+	public String contact(ModelMap model) {		
+		return "contactPage";
+	}
+	
+	/**
+	 * This method will provide the medium to update an existing user.
+	 */
+	@RequestMapping(value = { "/servicecenterdetail" }, method = RequestMethod.GET)
+	public String serviceCenterDetail(ModelMap model) {		
+		return "serviceCenterDetailPage";
 	}
 	
 	/**
